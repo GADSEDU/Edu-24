@@ -12,4 +12,9 @@
     <string name="email">name@gmail.com</string>
     <string name="password">* * * * *</string>
     <string name="name">John Doe</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="et_password">Password</string>
+    <string name="re_type_password">Re-type Password</string>
+
 </resources>
