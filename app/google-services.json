@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "746573936478",
+    "firebase_url": "https://edu-24.firebaseio.com",
+    "project_id": "edu-24",
+    "storage_bucket": "edu-24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746573936478:android:a65317338e5e5340f181cf",
+        "android_client_info": {
+          "package_name": "com.example.edu24"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746573936478-0pu8kjugnbrbmqt7kant20g8gqpn2b3v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXiqiwaf6U3pMu8Yw9f0MJzZBkO1404yM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746573936478-0pu8kjugnbrbmqt7kant20g8gqpn2b3v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
