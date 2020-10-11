@@ -20,34 +20,61 @@
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
         android:orientation="vertical">
+
         <EditText
+            android:id="@+id/first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@drawable/white_bg"
-            android:hint="@string/name"
-            android:textColorHint="@color/light_gray"
-            android:padding="15dp"/>
+            android:hint="@string/first_name"
+            android:padding="15dp"
+            android:textColorHint="@color/light_gray" />
 
 
         <EditText
+            android:id="@+id/last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_marginTop="30dp"
+            android:padding="15dp"
+            android:background="@drawable/white_bg"
+            android:inputType="textPersonName"
+            android:hint="@string/last_name"
+            android:textColorHint="@color/light_gray"/>
+
+        <EditText
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@drawable/white_bg"
             android:hint="@string/email"
-            android:textColorHint="@color/light_gray"
-            android:padding="15dp"/>
+            android:padding="15dp"
+            android:textColorHint="@color/light_gray" />
 
         <EditText
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@drawable/white_bg"
-            android:hint="@string/password"
-            android:textColorHint="@color/light_gray"
+            android:hint="@string/et_password"
             android:inputType="text"
-            android:padding="15dp"/>
+            android:padding="15dp"
+            android:textColorHint="@color/light_gray" />
+
+        <EditText
+            android:id="@+id/re_type_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/white_bg"
+            android:hint="@string/re_type_password"
+            android:padding="15dp"
+            android:textColorHint="@color/light_gray"/>
 
         <Button
             android:id="@+id/registerBtn"
