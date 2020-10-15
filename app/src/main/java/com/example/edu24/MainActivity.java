@@ -12,6 +12,7 @@ TextView mTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initialiseFirebase();
         setContentView(R.layout.activity_main);
 
         mTextView = findViewById(R.id.registerText);
@@ -27,5 +28,16 @@ TextView mTextView;
                 Intent intent = new Intent(this,LoginActivity.class);
                 startActivity(intent);
         }
+    }
+
+    private void initialiseFirebase() {
+        FirebaseUtil.openFirebaseReference("users", this);
+        FirebaseUtil.attachListener();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FirebaseUtil.detachListener();
     }
 }
