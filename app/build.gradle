@@ -34,6 +34,10 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation "com.google.firebase:firebase-auth:19.3.1"
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
+
 
     //FireBase BoM
     implementation platform('com.google.firebase:firebase-bom:25.12.0')
