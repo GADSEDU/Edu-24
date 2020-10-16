@@ -13,25 +13,25 @@ Button mRegisterBtn;
 TextView mLoginText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        mRegisterBtn = findViewById(R.id.registerBtn);
-        mLoginText = findViewById(R.id.loginTxt);
-        mLoginText.setOnClickListener(this);
-        mRegisterBtn.setOnClickListener(this);
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_register);
+//        mRegisterBtn = findViewById(R.id.registerBtn);
+//        mLoginText = findViewById(R.id.loginTxt);
+//        mLoginText.setOnClickListener(this);
+//        mRegisterBtn.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
-        int id = v.getId();
-        switch (id){
-            case R.id.registerBtn:
-                Intent intent = new Intent(this,LoginActivity.class);
-                startActivity(intent);
-            case R.id.loginTxt:
-                Intent loginIntent = new Intent(this,LoginActivity.class);
-                startActivity(loginIntent);
-        }
+//        int id = v.getId();
+//        switch (id){
+//            case R.id.registerBtn:
+//                Intent intent = new Intent(this,LoginActivity.class);
+//                startActivity(intent);
+//            case R.id.loginTxt:
+//                Intent loginIntent = new Intent(this,LoginActivity.class);
+//                startActivity(loginIntent);
+//        }
     }
 }

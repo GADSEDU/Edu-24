@@ -1,24 +1,29 @@
 <resources>
-    <string name="app_name">Edu24</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+	<string name="app_name">Edu24</string>
+	<string name="title_activity_login">Sign in</string>
+	<string name="prompt_email">Email</string>
+	<string name="prompt_password">Password</string>
+	<string name="action_sign_in">Sign in or register</string>
+	<string name="action_sign_in_short">Sign in</string>
+	<string name="welcome">"Welcome !"</string>
+	<string name="invalid_username">Not a valid username</string>
+	<string name="invalid_password">Password must be >5 characters</string>
+	<string name="login_failed">"Login failed"</string>
 
-    <string name="email">Email</string>
-    <string name="password">password</string>
-    <string name="re_password">Re_type password</string>
-    <string name="name">First Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="sign_up">By signing up,you accept our,</string>
-    <string name="terms">Terms and Conditions</string>
-    <string name="don_t_have_an_account">Don\'t have an Account?</string>
-    <string name="facebook">Sign in with facebook</string>
-    <string name="email_btn">Sign in with email</string>
+	<string name="email">Email</string>
+	<string name="password">password</string>
+	<string name="re_password">Re_type password</string>
+	<string name="name">First Name</string>
+	<string name="last_name">Last Name</string>
+	<string name="sign_up">By signing up,you accept our,</string>
+	<string name="terms">Terms and Conditions</string>
+	<string name="don_t_have_an_account">Don\'t have an Account?</string>
+	<string name="facebook">Sign in with facebook</string>
+	<string name="email_btn">Sign in with email</string>
+	<string name="title_activity_classroom">MainActivity</string>
+	<string name="title_class">Class</string>
+	<string name="title_chat">Chat</string>
+	<string name="title_classwork">Classwork</string>
+	<string name="title_people">People</string>
 
 </resources>
