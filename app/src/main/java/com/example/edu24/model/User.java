@@ -1,4 +1,4 @@
-package com.example.edu24;
+package com.example.edu24.model;
 
 public class User {
     private String user_id;

@@ -1,7 +1,8 @@
-package com.example.edu24;
+package com.example.edu24.util;
 
 import androidx.annotation.NonNull;
 
+import com.example.edu24.MainActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;

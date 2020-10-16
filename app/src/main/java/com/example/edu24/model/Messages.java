@@ -1,4 +1,4 @@
-package com.example.edu24;
+package com.example.edu24.model;
 
 public class Messages {
     private String message_id;
