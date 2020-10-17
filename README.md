@@ -5,7 +5,7 @@ Home page>
 Dialog >>
 Create class>
 Join class>
--Class list>
+Class list>
 Navigation bar>
 Teachers>
 Students
