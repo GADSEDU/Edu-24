@@ -2,6 +2,7 @@ package com.example.edu24.util;
 
 import androidx.annotation.NonNull;
 
+import com.example.edu24.ClassRoomActivity;
 import com.example.edu24.MainActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,9 +20,9 @@ public class FirebaseUtil {
     private static FirebaseUtil sFirebaseUtil;
     private static FirebaseAuth sFirebaseAuth;
     private static FirebaseAuth.AuthStateListener sAuthStateListener;
-    private static MainActivity sCallerActivity;
+    private static ClassRoomActivity sCallerActivity;
 
-    public static void openFirebaseReference(String ref, final MainActivity callerActivity) {
+    public static void openFirebaseReference(String ref, final ClassRoomActivity callerActivity) {
         if (sFirebaseUtil == null) {
             sFirebaseUtil = new FirebaseUtil();
             sFirebaseDatabase = FirebaseDatabase.getInstance();
