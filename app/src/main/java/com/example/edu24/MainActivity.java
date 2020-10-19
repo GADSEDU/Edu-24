@@ -33,7 +33,7 @@ TextView mTextView;
     }
 
     private void initialiseFirebase() {
-        FirebaseUtil.openFirebaseReference("users", this);
+//        FirebaseUtil.openFirebaseReference("users", this);
         FirebaseUtil.attachListener();
     }
 
