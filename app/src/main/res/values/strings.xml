@@ -16,8 +16,7 @@
     <string name="name">First Name</string>
     <string name="last_name">Last Name</string>
 
-    <string name="email">name@gmail.com</string>
-    <string name="password">* * * * *</string>
+
     <string name="et_password">Password</string>
     <string name="re_type_password">Re-type Password</string>
     <string name="title_activity_class_room">classRoomActivity</string>

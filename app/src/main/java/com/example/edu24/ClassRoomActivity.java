@@ -19,15 +19,35 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class classRoomActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ClassRoomActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_room);
+
+        mRecyclerView = findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        List<ModelClass> modelClassList = new ArrayList<>();
+
+        Adapter adapter = new Adapter(modelClassList);
+        mRecyclerView.setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
