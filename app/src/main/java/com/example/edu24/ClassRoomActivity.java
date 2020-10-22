@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
-import com.example.edu24.ui.AccountFragment;
 import com.example.edu24.util.LoginSharePref;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -18,10 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -37,6 +33,7 @@ public class ClassRoomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_class_room);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,6 +100,5 @@ public class ClassRoomActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.class_room, menu);
         return true;
     }
-
 
 }
