@@ -10,6 +10,10 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
+<!--    Facebook Login details-->
+    <string name="facebook_app_id">415776683157146</string>
+    <string name="fb_login_protocol_scheme">fb415776683157146</string>
+
     <string name="email">Email</string>
     <string name="password">password</string>
     <string name="re_password">Re_type password</string>
@@ -37,6 +41,19 @@
 
     <string name="sign_up">By signing up,you accept our,</string>
     <string name="terms">Terms and Conditions</string>
+
+    <string name="sign_in_with_google_text">Sign in with Google</string>
+    <string name="sign_in_with_facebook_text">Sign in with Facebook</string>
+    <string name="sign_in_with_email_text">Sign in with Email</string>
+    <string name="don_t_have_an_account_text">Don\'t have an account?</string>
+    <string name="share_text">Share</string>
+    <string name="signup_text">SignUp</string>
+    <string name="email_text">Email</string>
+    <string name="password_text">Password</string>
+    <string name="sign_in_text">Sign In</string>
+    <string name="name_text">Name</string>
+    <string name="confirmed_password_text">Confirmed Password</string>
+
     <string name="don_t_have_an_account">Don\'t have an Account?</string>
     <string name="facebook">Sign in with facebook</string>
     <string name="email_btn">Sign in with email</string>
@@ -49,6 +66,5 @@
 	<string name="input_message_hint">Type your message here</string>
 	<string name="display_teachers">Teachers</string>
 	<string name="display_students">Students</string>
-
 
 </resources>

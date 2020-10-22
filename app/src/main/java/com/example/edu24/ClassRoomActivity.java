@@ -1,39 +1,44 @@
 package com.example.edu24;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
-import com.example.edu24.util.FirebaseUtil;
+import com.example.edu24.util.LoginSharePref;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class ClassRoomActivity extends AppCompatActivity {
 
+    private static final String TAG = "ClassRoom";
     private AppBarConfiguration mAppBarConfiguration;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+    private LoginSharePref loginSharePref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initialiseFirebase();
-
         setContentView(R.layout.activity_class_room);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        firebaseAuth = FirebaseAuth.getInstance();
+        loginSharePref = new LoginSharePref(this);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,9 +79,14 @@ public class ClassRoomActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Privacy", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_logout:
-                        Toast.makeText(getApplicationContext(), "Logout", Toast.LENGTH_SHORT).show();
-                         break;
-
+                        firebaseAuth.signOut();
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        if (user == null){
+                            startActivity(new Intent(ClassRoomActivity.this, AccountActivity.class));
+                            finish();
+                        }else {
+                            Log.d(TAG, "onAuthStateChanged: " + "Sign out fail");
+                        }
                 }
                 return false;
             }
@@ -90,17 +100,5 @@ public class ClassRoomActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.class_room, menu);
         return true;
     }
-
-    private void initialiseFirebase() {
-        FirebaseUtil.openFirebaseReference("users", this);
-        FirebaseUtil.attachListener();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        FirebaseUtil.detachListener();
-    }
-
 
 }
