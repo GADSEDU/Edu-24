@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:padding="4dp">
+
+	<androidx.cardview.widget.CardView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:cardCornerRadius="5dp"
+		app:cardElevation="5dp"
+		app:contentPadding="4dp">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<TextView
+				android:id="@+id/classwork_name"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="8dp"
+				android:layout_marginTop="8dp"
+				android:layout_marginEnd="8dp"
+				android:padding="4dp"
+				android:text="Classwork Name"
+				android:textAppearance="@android:style/TextAppearance.Material.Large"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<TextView
+				android:id="@+id/classwork_preview"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:padding="4dp"
+				android:text="TextView"
+				android:textAppearance="@android:style/TextAppearance.Material.Medium"
+				app:layout_constraintEnd_toEndOf="@+id/classwork_name"
+				app:layout_constraintStart_toStartOf="@+id/classwork_name"
+				app:layout_constraintTop_toBottomOf="@+id/classwork_name" />
+
+			<TextView
+				android:id="@+id/classwork_due_date"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:layout_marginBottom="8dp"
+				android:padding="4dp"
+				android:text="YYYY-MM-DD"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="@+id/classwork_preview"
+				app:layout_constraintTop_toBottomOf="@+id/classwork_preview" />
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</androidx.cardview.widget.CardView>
+</FrameLayout>
