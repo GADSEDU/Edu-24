@@ -21,15 +21,19 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".ClassRoomActivity" />
-        <activity
-            android:name=".ClassroomListActivity"
+
+        <activity android:name=".MainActivity"></activity>
+
+        <activity android:name=".ClassroomListActivity"
             android:label="@string/title_activity_classroom_list"></activity>
 
         <activity android:name=".AccountActivity"/>
 
         <activity android:name=".MainActivity"/>
+
 
     </application>
 

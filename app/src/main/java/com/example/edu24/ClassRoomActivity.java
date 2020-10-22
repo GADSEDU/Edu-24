@@ -8,7 +8,13 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
+
+
+import com.example.edu24.util.FirebaseUtil;
+
+
 import com.example.edu24.util.LoginSharePref;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -22,6 +28,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class ClassRoomActivity extends AppCompatActivity {
 
     private static final String TAG = "ClassRoom";
@@ -30,11 +43,35 @@ public class ClassRoomActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     private LoginSharePref loginSharePref;
 
+    private RecyclerView mRecyclerView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_class_room);
+
+        mRecyclerView = findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        List<ModelClass> modelClassList = new ArrayList<>();
+
+        Adapter adapter = new Adapter(modelClassList);
+        mRecyclerView.setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
+
+
+
+
+        initialiseFirebase();
+
+
+        setContentView(R.layout.activity_class_room);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -100,5 +137,22 @@ public class ClassRoomActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.class_room, menu);
         return true;
     }
+
+
+
+
+    private void initialiseFirebase() {
+        FirebaseUtil.openFirebaseReference("users", this);
+        FirebaseUtil.attachListener();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FirebaseUtil.detachListener();
+    }
+
+
+
 
 }
