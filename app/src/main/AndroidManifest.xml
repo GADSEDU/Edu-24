@@ -11,12 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-        <activity android:name=".TermsActivity"></activity>
-        <activity android:name=".SplashScreenActivity"
+        <activity
+            android:name=".ClassroomListActivity"
+            android:label="@string/title_activity_classroom_list"></activity>
+        <activity android:name=".TermsActivity" />
+        <activity
+            android:name=".SplashScreenActivity"
             android:theme="@style/SplashScreen">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,11 +25,9 @@
             </intent-filter>
 
         </activity>
-
-        <activity android:name=".MainActivity">
-
-
-        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".ClassRoomActivity" />
+        <activity android:name=".MainActivity"></activity>
 
     </application>
 

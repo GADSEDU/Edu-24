@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
+
+import com.example.edu24.util.FirebaseUtil;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -19,20 +22,25 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ClassRoomActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+
     private RecyclerView mRecyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_class_room);
 
         mRecyclerView = findViewById(R.id.recyclerView);
@@ -47,6 +55,12 @@ public class ClassRoomActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
+
+
+
+        initialiseFirebase();
+
+        setContentView(R.layout.activity_class_room);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -106,6 +120,20 @@ public class ClassRoomActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.class_room, menu);
         return true;
     }
+
+
+
+    private void initialiseFirebase() {
+        FirebaseUtil.openFirebaseReference("users", this);
+        FirebaseUtil.attachListener();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FirebaseUtil.detachListener();
+    }
+
 
 
 }
