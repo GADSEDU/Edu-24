@@ -8,11 +8,6 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
-
-
-import com.example.edu24.util.FirebaseUtil;
-
-
 import com.example.edu24.util.LoginSharePref;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -137,22 +132,5 @@ public class ClassRoomActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.class_room, menu);
         return true;
     }
-
-
-
-
-    private void initialiseFirebase() {
-        FirebaseUtil.openFirebaseReference("users", this);
-        FirebaseUtil.attachListener();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        FirebaseUtil.detachListener();
-    }
-
-
-
 
 }
