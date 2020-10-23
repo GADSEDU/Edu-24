@@ -59,11 +59,7 @@ public class ClassRoomActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
-
-
-
         initialiseFirebase();
-
 
         setContentView(R.layout.activity_class_room);
 
