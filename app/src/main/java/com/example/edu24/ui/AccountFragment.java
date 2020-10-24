@@ -1,6 +1,7 @@
 package com.example.edu24.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,12 +13,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
 import com.example.edu24.R;
 import com.example.edu24.ClassRoomActivity;
+import com.example.edu24.model.User;
 import com.example.edu24.util.LoginSharePref;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -37,6 +41,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class AccountFragment extends Fragment {
     private static final String TAG = "firebase";
@@ -44,11 +49,11 @@ public class AccountFragment extends Fragment {
     private Button signUpButton,signInButton,googleButton;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseDatabase firebaseDatabase;
-    private FirebaseAuth auth;
-    private LoginSharePref loginSharePref;
     private DatabaseReference databaseReference;
+    private FirebaseAuth auth;
     private GoogleSignInClient mGoogleSignInClient;
-
+    private GoogleSignInAccount mGoogleSignInAccount;
+    private ProgressBar progressBar;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -59,26 +64,21 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account, container, false);
-
-        loginSharePref = new LoginSharePref(getContext());
-        if (loginSharePref.isLogin()){
-            startActivity(new Intent(getContext(), ClassRoomActivity.class));
-            requireActivity().finish();
-        }
         //Initializing instances
-        firebaseDatabase = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference().child(getString(R.string.db_users));
         //Initialize Views
         signUpButton = view.findViewById(R.id.acct_sign_up_button);
         signInButton = view.findViewById(R.id.acctEmail);
         googleButton = view.findViewById(R.id.acctGoogle);
+        progressBar = view.findViewById(R.id.progressBar);
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(getContext(),gso);
-
+        mGoogleSignInClient = GoogleSignIn.getClient(requireContext(),gso);
         FirebaseUser user = auth.getCurrentUser();
         updateUI(user);
         return view;
@@ -133,6 +133,9 @@ public class AccountFragment extends Fragment {
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
+        progressBar.setVisibility(View.VISIBLE);
+        requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -140,11 +143,23 @@ public class AccountFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            mGoogleSignInAccount = GoogleSignIn.getLastSignedInAccount(getActivity());
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = auth.getCurrentUser();
+                            if (mGoogleSignInAccount != null){
+                                String personGivenName = mGoogleSignInAccount.getGivenName();
+                                String personFamilyName = mGoogleSignInAccount.getFamilyName();
+                                String personEmail = mGoogleSignInAccount.getEmail();
+                                Uri personPhoto = mGoogleSignInAccount.getPhotoUrl();
+                                saveUser(personGivenName,personFamilyName,personEmail,personPhoto.toString());
+                            }
                             updateUI(user);
+                            progressBar.setVisibility(View.GONE);
+                            requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                         } else {
                             // If sign in fails, display a message to the user.
+                            progressBar.setVisibility(View.GONE);
+                            requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                             Log.d(TAG, "signInWithCredential:failure", task.getException());
                             updateUI(null);
                         }
@@ -153,11 +168,22 @@ public class AccountFragment extends Fragment {
                 });
     }
 
+    private void saveUser(String firstName,String surname, String email, String image) {
+        String userID = auth.getCurrentUser().getUid();
+        User user = new User(userID,firstName,surname,email,image);
+        databaseReference.child(userID).setValue(user);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        FirebaseUser user = auth.getCurrentUser();
+        updateUI(user);
+    }
 
     private void updateUI(FirebaseUser user) {
         if(user != null){
             startActivity(new Intent(getContext(), ClassRoomActivity.class));
-            requireActivity().finish();
+            getActivity().finish();
         }else {
             Toast.makeText(getContext(), "please sign in to continue",
                     Toast.LENGTH_SHORT).show();

@@ -67,4 +67,6 @@
 	<string name="display_teachers">Teachers</string>
 	<string name="display_students">Students</string>
 
+    <string name="db_users">Users</string>
+    <string name="db_classes">Classes</string>
 </resources>

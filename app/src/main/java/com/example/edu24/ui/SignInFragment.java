@@ -60,21 +60,6 @@ public class SignInFragment extends Fragment {
         email = view.findViewById(R.id.sign_in_email);
         password = view.findViewById(R.id.sign_in_password);
         SignIn = view.findViewById(R.id.sign_in_button);
-//        authStateListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser user = auth.getCurrentUser();
-//                if (user != null){
-//                    updateUI(user);
-//                }else {
-//                    Log.d(TAG, "onAuthStateChanged: " + "NotSigned in");
-//                    updateUI(null);
-//                }
-//            }
-//        };
-
-        FirebaseUser user = auth.getCurrentUser();
-        updateUI(user);
         return view;
     }
 
@@ -87,6 +72,9 @@ public class SignInFragment extends Fragment {
                 String emailText = email.getText().toString();
                 String passwordText = password.getText().toString();
                 if (!TextUtils.isEmpty(emailText) && !TextUtils.isEmpty(passwordText)){
+                    progressBar.setVisibility(View.VISIBLE);
+                    requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     auth.signInWithEmailAndPassword(emailText,passwordText)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -94,9 +82,6 @@ public class SignInFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d(TAG, "signInWithEmail:success");
-                                        progressBar.setVisibility(View.VISIBLE);
-                                        requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                                                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                         FirebaseUser user = auth.getCurrentUser();
                                         updateUI(user);
                                         progressBar.setVisibility(View.GONE);
@@ -124,6 +109,13 @@ public class SignInFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        FirebaseUser user = auth.getCurrentUser();
+        updateUI(user);
     }
 
     private void updateUI(FirebaseUser user) {

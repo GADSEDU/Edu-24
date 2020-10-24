@@ -20,7 +20,7 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		tools:listitem="@layout/message_view_item" />
+		tools:listitem="@layout/message_send" />
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:id="@+id/constraintLayout"
