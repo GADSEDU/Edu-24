@@ -32,9 +32,6 @@
 
         <activity android:name=".AccountActivity"/>
 
-        <activity android:name=".MainActivity"/>
-
-
     </application>
 
 </manifest>
