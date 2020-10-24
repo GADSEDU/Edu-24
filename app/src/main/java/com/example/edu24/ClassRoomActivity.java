@@ -36,7 +36,6 @@ public class ClassRoomActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private LoginSharePref loginSharePref;
 
     private RecyclerView mRecyclerView;
 
@@ -66,7 +65,6 @@ public class ClassRoomActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         firebaseAuth = FirebaseAuth.getInstance();
-        loginSharePref = new LoginSharePref(this);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
