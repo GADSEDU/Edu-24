@@ -171,6 +171,8 @@ public class AccountFragment extends Fragment {
     private void saveUser(String firstName,String surname, String email, String image) {
         String userID = auth.getCurrentUser().getUid();
         User user = new User(userID,firstName,surname,email,image);
+        user.setUser_gender(null);
+        user.setUser_classes(null);
         databaseReference.child(userID).setValue(user);
     }
     @Override

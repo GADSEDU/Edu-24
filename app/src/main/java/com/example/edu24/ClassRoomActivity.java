@@ -1,5 +1,6 @@
 package com.example.edu24;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,11 +19,15 @@ import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,10 +39,8 @@ public class ClassRoomActivity extends AppCompatActivity {
 
     private static final String TAG = "ClassRoom";
     private AppBarConfiguration mAppBarConfiguration;
-    private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-
-    private RecyclerView mRecyclerView;
+    private FirebaseAuth firebaseAuth;
 
 
     @Override
@@ -46,63 +49,26 @@ public class ClassRoomActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_class_room);
 
-        mRecyclerView = findViewById(R.id.recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
-
-        List<ModelClass> modelClassList = new ArrayList<>();
-
-        Adapter adapter = new Adapter(modelClassList);
-        mRecyclerView.setAdapter(adapter);
-
-        adapter.notifyDataSetChanged();
-
-        setContentView(R.layout.activity_class_room);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.class_toolbar);
         setSupportActionBar(toolbar);
         firebaseAuth = FirebaseAuth.getInstance();
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_classes, R.id.nav_profile, R.id.nav_settings,R.id.nav_terms,R.id.nav_privacy,R.id.nav_logout)
+                .setDrawerLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId())
-                {
-                    case R.id.nav_classes:
-                        Toast.makeText(getApplicationContext(), "Classes", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_profile:
-                        Toast.makeText(getApplicationContext(), "My profile", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_settings:
-                        Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_terms:
-                        Toast.makeText(getApplicationContext(), "Terms and conditions", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_privacy:
-                        Toast.makeText(getApplicationContext(), "Privacy", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_logout:
+        navigationView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
+            AlertDialog.Builder builder= new AlertDialog.Builder(this);
+            builder.setMessage("Are u sure u want to Log Out")
+                    .setPositiveButton("Yes", (dialogInterface, i) -> {
                         firebaseAuth.signOut();
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         if (user == null){
@@ -111,18 +77,21 @@ public class ClassRoomActivity extends AppCompatActivity {
                         }else {
                             Log.d(TAG, "onAuthStateChanged: " + "Sign out fail");
                         }
-                }
-                return false;
-            }
+                    })
+                    .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.cancel());
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            return false;
         });
-    }
 
+    }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.class_room, menu);
-        return true;
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
     }
+
 
 }

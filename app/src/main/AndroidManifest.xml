@@ -11,27 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".TermsActivity"></activity>
-        <activity android:name=".SplashScreenActivity"
+        <activity android:name=".JoinActivity"
+            android:theme="@style/Theme.MyApp"></activity>
+        <activity
+            android:name=".CreateAClassActivity"
+            android:theme="@style/Theme.MyApp" />
+        <activity android:name=".TermsActivity" />
+        <activity
+            android:name=".SplashScreenActivity"
             android:theme="@style/SplashScreen">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".ClassRoomActivity" />
-
-        <activity android:name=".MainActivity"></activity>
-
-        <activity android:name=".ClassroomListActivity"
-            android:label="@string/title_activity_classroom_list"></activity>
-
-        <activity android:name=".AccountActivity"/>
-
+        <activity android:name=".ClassActivity" />
+        <activity android:name=".AccountActivity" />
     </application>
 
 </manifest>

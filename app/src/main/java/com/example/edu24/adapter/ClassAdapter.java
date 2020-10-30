@@ -1,5 +1,6 @@
-package com.example.edu24;
+package com.example.edu24.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,32 +9,36 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.edu24.model.ModelClass;
+import com.example.edu24.R;
+
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
-
+public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClasssViewHolder> {
 
     private List<ModelClass> mModelClassList;
+    private Context context;
 
-    public Adapter(List<ModelClass> modelClassList) {
-        mModelClassList = modelClassList;
+    public ClassAdapter(List<ModelClass> mModelClassList, Context context) {
+        this.mModelClassList = mModelClassList;
+        this.context = context;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_students, viewGroup,
+    public ClasssViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_students, viewGroup,
                 false);
-        return new ViewHolder(view);
+        return new ClasssViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull ClasssViewHolder classsViewHolder, int position) {
 
         String className = mModelClassList.get(position).getClassName();
         String section = mModelClassList.get(position).getSection();
         String student = mModelClassList.get(position).getStudent();
-        viewHolder.setData(className, section, student);
+        classsViewHolder.setData(className, section, student);
 
     }
 
@@ -42,13 +47,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return mModelClassList.size();
     }
 
-    class  ViewHolder extends RecyclerView.ViewHolder{
+    class ClasssViewHolder extends RecyclerView.ViewHolder{
 
         private TextView className;
         private TextView section;
         private TextView student;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ClasssViewHolder(@NonNull View itemView) {
             super(itemView);
 
             className = itemView.findViewById(R.id.tv_className);

@@ -153,7 +153,8 @@ public class SignUpFragment extends Fragment {
 
     private void saveUser(String firstname, String surname, String email) {
         String userID = auth.getCurrentUser().getUid();
-        User user = new User(userID,firstname,surname,email,"");
+        User user = new User(userID,firstname,surname,"",email,"");
+        user.setUser_classes(null);
         databaseReference.child(userID).setValue(user);
     }
 

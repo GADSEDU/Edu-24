@@ -44,7 +44,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
         public MessagesViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.profilePicture = itemView.findViewById(R.id.profile_picture);
             this.message = itemView.findViewById(R.id.message);
         }
 

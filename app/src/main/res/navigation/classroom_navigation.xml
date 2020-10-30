@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/classroom_navigation"
+    app:startDestination="@id/nav_classes">
+
+    <fragment
+        android:id="@+id/nav_classes"
+        android:name="com.example.edu24.ui.classes.ClassesFragment"
+        android:label="@string/menu_classes"
+        tools:layout="@layout/fragment_classes" />
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.edu24.ui.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
