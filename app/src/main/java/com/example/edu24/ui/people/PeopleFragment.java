@@ -92,7 +92,11 @@ public class PeopleFragment extends Fragment {
                 Classes classes = snapshot.getValue(Classes.class);
                 Log.d(TAG, "onDataChange: " + classes.getClass_student());
                 getTeachers(classes.getClass_teacher());
-                getStudent(classes.getClass_student());
+                if (classes.getClass_student() == null){
+
+                }else {
+                    getStudent(classes.getClass_student());
+                }
             }
 
             @Override

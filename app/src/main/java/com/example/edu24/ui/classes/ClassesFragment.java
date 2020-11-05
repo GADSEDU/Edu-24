@@ -94,7 +94,7 @@ public class ClassesFragment extends Fragment {
         swipe.setOnRefreshListener(() -> {
             new Handler().postDelayed(() -> {
                 if (NetworkUtils.isNetworkConnected(getContext())){
-                    listOfClass();
+//                    listOfClass();
                     swipe.setRefreshing(false);
                 }else {
                     Snackbar.make(view, "Internet connection failed", Snackbar.LENGTH_LONG).show();
