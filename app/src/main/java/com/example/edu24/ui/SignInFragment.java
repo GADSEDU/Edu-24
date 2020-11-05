@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -18,12 +20,14 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.edu24.NetworkUtils;
 import com.example.edu24.R;
 import com.example.edu24.ClassRoomActivity;
 import com.example.edu24.util.LoginSharePref;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -66,12 +70,11 @@ public class SignInFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String emailText = email.getText().toString();
-                String passwordText = password.getText().toString();
-                if (!TextUtils.isEmpty(emailText) && !TextUtils.isEmpty(passwordText)){
+        SignIn.setOnClickListener(view1 -> {
+            String emailText = email.getText().toString();
+            String passwordText = password.getText().toString();
+            if (!TextUtils.isEmpty(emailText) && !TextUtils.isEmpty(passwordText)){
+                if (NetworkUtils.isNetworkConnected(getContext())){
                     progressBar.setVisibility(View.VISIBLE);
                     requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -106,7 +109,10 @@ public class SignInFragment extends Fragment {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
+                }else{
+                    Snackbar.make(view1, "Internet connection failed", Snackbar.LENGTH_LONG).show();
                 }
+
             }
         });
     }

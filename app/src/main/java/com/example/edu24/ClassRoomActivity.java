@@ -67,7 +67,7 @@ public class ClassRoomActivity extends AppCompatActivity {
 
         navigationView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
             AlertDialog.Builder builder= new AlertDialog.Builder(this);
-            builder.setMessage("Are u sure u want to Log Out")
+            builder.setTitle("Logout").setMessage("Do you want to Logout")
                     .setPositiveButton("Yes", (dialogInterface, i) -> {
                         firebaseAuth.signOut();
                         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -92,6 +92,5 @@ public class ClassRoomActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
 
 }

@@ -1,4 +1,4 @@
-package com.example.edu24.ui.classList;
+package com.example.edu24.ui.classInfo;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

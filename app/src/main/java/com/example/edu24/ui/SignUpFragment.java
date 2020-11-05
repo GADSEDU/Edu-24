@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.edu24.ClassRoomActivity;
+import com.example.edu24.NetworkUtils;
 import com.example.edu24.R;
 import com.example.edu24.model.User;
 import com.example.edu24.util.LoginSharePref;
@@ -101,12 +102,16 @@ public class SignUpFragment extends Fragment {
                         if (Objects.equals(confirmedPasswordText, passwordText)){
                             confirmedPasswordLayout.setErrorEnabled(false);
                             passwordLayout.setErrorEnabled(false);
-                            progressBar.setVisibility(View.VISIBLE);
-                            requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                            signUp(emailText,passwordText,firstnameText, surnameText);
-                            progressBar.setVisibility(View.GONE);
-                            requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            if (NetworkUtils.isNetworkConnected(getContext())){
+                                progressBar.setVisibility(View.VISIBLE);
+                                requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                signUp(emailText,passwordText,firstnameText, surnameText);
+                                progressBar.setVisibility(View.GONE);
+                                requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            }else {
+                                Snackbar.make(view, "Internet connection failed", Snackbar.LENGTH_LONG).show();
+                            }
                         }else{
                             confirmedPasswordLayout.setErrorEnabled(true);
                             confirmedPasswordLayout.setErrorIconDrawable(0);
@@ -153,8 +158,8 @@ public class SignUpFragment extends Fragment {
 
     private void saveUser(String firstname, String surname, String email) {
         String userID = auth.getCurrentUser().getUid();
-        User user = new User(userID,firstname,surname,"",email,"");
-        user.setUser_classes(null);
+        User user = new User(userID,firstname,surname,email,"");
+
         databaseReference.child(userID).setValue(user);
     }
 

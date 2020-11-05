@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_student"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/nav_header_desc"
+            android:src="@drawable/default_svg"
+            app:civ_border_color="#FF000000"
+            app:civ_circle_background_color="@color/light_gray" />
+
+        <TextView
+            android:id="@+id/student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center"
+            android:text="TextView"
+            android:textSize="18sp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

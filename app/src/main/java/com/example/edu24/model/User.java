@@ -1,16 +1,16 @@
 package com.example.edu24.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class User {
     private String user_id;
     private String user_first_name;
     private String user_surname;
-    private String user_gender;
     private String user_email;
     private String profile_image;
-    private ArrayList<String> user_classes = new ArrayList<>();
-    private String[] important_messages;
+    private HashMap<String,String> user_classes;
 
     public User() {}
 
@@ -20,39 +20,6 @@ public class User {
         this.user_surname = user_surname;
         this.user_email = user_email;
         this.profile_image = profile_image;
-    }
-
-    public User(String user_id, String user_first_name, String user_surname, String user_gender, String user_email, String profile_image) {
-        this.user_id = user_id;
-        this.user_first_name = user_first_name;
-        this.user_surname = user_surname;
-        this.user_gender = user_gender;
-        this.user_email = user_email;
-        this.profile_image = profile_image;
-    }
-
-    public String getUser_gender() {
-        return user_gender;
-    }
-
-    public void setUser_gender(String user_gender) {
-        this.user_gender = user_gender;
-    }
-
-    public ArrayList<String> getUser_classes() {
-        return user_classes;
-    }
-
-    public void setUser_classes(ArrayList<String> user_classes) {
-        this.user_classes = user_classes;
-    }
-
-    public String getUser_email() {
-        return user_email;
-    }
-
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
     }
 
     public String getUser_id() {
@@ -79,6 +46,14 @@ public class User {
         this.user_surname = user_surname;
     }
 
+    public String getUser_email() {
+        return user_email;
+    }
+
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
+    }
+
     public String getProfile_image() {
         return profile_image;
     }
@@ -87,15 +62,11 @@ public class User {
         this.profile_image = profile_image;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "user_id='" + user_id + '\'' +
-                ", user_first_name='" + user_first_name + '\'' +
-                ", user_surname='" + user_surname + '\'' +
-                ", user_gender='" + user_gender + '\'' +
-                ", user_email='" + user_email + '\'' +
-                ", profile_image='" + profile_image + '\'' +
-                '}';
+    public HashMap<String,String> getUser_classes() {
+        return user_classes;
+    }
+
+    public void setUser_classes(HashMap<String,String> user_classes) {
+        this.user_classes = user_classes;
     }
 }

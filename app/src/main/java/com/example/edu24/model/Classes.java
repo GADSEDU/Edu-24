@@ -1,12 +1,13 @@
 package com.example.edu24.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Classes {
     private String class_id;
     private String class_teacher;
-    private ArrayList<String> class_student;
+    private HashMap<String,String> class_student;
     private String class_name;
     private String class_status;
     private String class_code;
@@ -25,6 +26,13 @@ public class Classes {
         this.class_teacher = class_teacher;
     }
 
+    public HashMap<String,String> getClass_student() {
+        return class_student;
+    }
+
+    public void setClass_student(HashMap<String,String> class_student) {
+        this.class_student = class_student;
+    }
 
     public String getClass_id() {
         return class_id;

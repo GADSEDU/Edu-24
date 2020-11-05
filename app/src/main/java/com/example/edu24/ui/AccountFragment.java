@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
+import com.example.edu24.NetworkUtils;
 import com.example.edu24.R;
 import com.example.edu24.ClassRoomActivity;
 import com.example.edu24.model.User;
@@ -30,26 +31,39 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
 
 public class AccountFragment extends Fragment {
     private static final String TAG = "firebase";
     private static final int RC_SIGN_IN = 1;
+    public static final int PICTURE_RESULT = 42;
     private Button signUpButton,signInButton,googleButton;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+    private FirebaseStorage storage;
+    private StorageReference storeRef;
     private FirebaseAuth auth;
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInAccount mGoogleSignInAccount;
@@ -67,6 +81,8 @@ public class AccountFragment extends Fragment {
         //Initializing instances
         auth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storeRef = storage.getReference().child(getString(R.string.db_profile));
         databaseReference = firebaseDatabase.getReference().child(getString(R.string.db_users));
         //Initialize Views
         signUpButton = view.findViewById(R.id.acct_sign_up_button);
@@ -88,25 +104,16 @@ public class AccountFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(AccountFragment.this)
-                        .navigate(R.id.action_accountFragment_to_signUpFragment);
-            }
-        });
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(AccountFragment.this)
-                        .navigate(R.id.action_accountFragment_to_signInFragment);
-            }
-        });
-        googleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        signUpButton.setOnClickListener(view1 -> NavHostFragment.findNavController(AccountFragment.this)
+                .navigate(R.id.action_accountFragment_to_signUpFragment));
+        signInButton.setOnClickListener(view12 -> NavHostFragment.findNavController(AccountFragment.this)
+                .navigate(R.id.action_accountFragment_to_signInFragment));
+        googleButton.setOnClickListener(view13 -> {
+            if (NetworkUtils.isNetworkConnected(getContext())){
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
+            }else {
+                Snackbar.make(view13, "Internet connection failed", Snackbar.LENGTH_LONG)    .show();
             }
         });
     }
@@ -130,6 +137,15 @@ public class AccountFragment extends Fragment {
                 // ...
             }
         }
+        if (requestCode == PICTURE_RESULT && resultCode == RESULT_OK){
+            Uri imageUri = data.getData();
+            storeRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                }
+            });
+        }
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
@@ -151,7 +167,24 @@ public class AccountFragment extends Fragment {
                                 String personFamilyName = mGoogleSignInAccount.getFamilyName();
                                 String personEmail = mGoogleSignInAccount.getEmail();
                                 Uri personPhoto = mGoogleSignInAccount.getPhotoUrl();
-                                saveUser(personGivenName,personFamilyName,personEmail,personPhoto.toString());
+                                storeRef.putFile(personPhoto);
+                                String userID = auth.getCurrentUser().getUid();
+                                databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if(dataSnapshot.exists()){
+                                            Log.d("Users", "User already exist");
+                                        }else{
+                                            saveUser(personGivenName,personFamilyName,personEmail,personPhoto.toString());
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
                             }
                             updateUI(user);
                             progressBar.setVisibility(View.GONE);
@@ -171,8 +204,6 @@ public class AccountFragment extends Fragment {
     private void saveUser(String firstName,String surname, String email, String image) {
         String userID = auth.getCurrentUser().getUid();
         User user = new User(userID,firstName,surname,email,image);
-        user.setUser_gender(null);
-        user.setUser_classes(null);
         databaseReference.child(userID).setValue(user);
     }
     @Override

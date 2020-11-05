@@ -68,7 +68,9 @@
 
     <string name="db_users">Users</string>
     <string name="db_classes">Classes</string>
+    <string name="db_profile">ProfileImage</string>
     <string-array name="gender">
+        <item>-- Select Gender --</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>

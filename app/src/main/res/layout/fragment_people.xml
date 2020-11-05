@@ -20,31 +20,50 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
-	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/teachers_recycler_view"
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
+	<de.hdodenhof.circleimageview.CircleImageView
+		android:id="@+id/teacher_profile_image"
+		android:layout_width="50dp"
+		android:layout_height="50dp"
 		android:layout_marginTop="16dp"
-		app:layout_constraintEnd_toEndOf="@+id/display_teachers"
+		android:contentDescription="@string/nav_header_desc"
+		android:src="@drawable/default_svg"
+		app:civ_border_color="#FF000000"
+		app:civ_circle_background_color="@color/light_gray"
 		app:layout_constraintStart_toStartOf="@+id/display_teachers"
+		app:layout_constraintTop_toBottomOf="@+id/display_teachers" />
+
+	<TextView
+		android:id="@+id/teacher_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="32dp"
+		android:layout_marginTop="28dp"
+		android:text="TextView"
+		android:textSize="18sp"
+		app:layout_constraintStart_toEndOf="@+id/teacher_profile_image"
 		app:layout_constraintTop_toBottomOf="@+id/display_teachers" />
 
 	<TextView
 		android:id="@+id/display_students"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="32dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="16dp"
 		android:text="@string/display_students"
 		android:textAppearance="@style/TextAppearance.AppCompat.Large"
-		app:layout_constraintEnd_toEndOf="@+id/teachers_recycler_view"
-		app:layout_constraintStart_toStartOf="@+id/teachers_recycler_view"
-		app:layout_constraintTop_toBottomOf="@+id/teachers_recycler_view" />
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/teacher_profile_image" />
 
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/students_recycler_view"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content"
+		android:layout_height="0dp"
 		android:layout_marginTop="16dp"
+		tools:listitem="@layout/student_list"
+		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="@+id/display_students"
 		app:layout_constraintStart_toStartOf="@+id/display_students"
 		app:layout_constraintTop_toBottomOf="@+id/display_students" />

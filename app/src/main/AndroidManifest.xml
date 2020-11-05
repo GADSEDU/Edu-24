@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ClassRoomActivity" />
-        <activity android:name=".ClassActivity" />
+        <activity android:name=".ClassActivity"/>
         <activity android:name=".AccountActivity" />
     </application>
 

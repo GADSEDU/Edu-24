@@ -1,18 +1,24 @@
 package com.example.edu24;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.edu24.model.Classes;
 import com.example.edu24.model.User;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CreateAClassActivity extends AppCompatActivity {
     private static final String TAG = "Create Class";
@@ -39,6 +46,7 @@ public class CreateAClassActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_a_class);
         toolbar = findViewById(R.id.create_toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(view -> finish());
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -51,13 +59,18 @@ public class CreateAClassActivity extends AppCompatActivity {
         Subject = findViewById(R.id.subject);
 
         create.setOnClickListener(view -> {
-            String class_name = className.getText().toString();
-            String sectiontxt = section.getText().toString();
-            String roomtxt = Room.getText().toString();
-            String subjecttxt = Subject.getText().toString();
-            if (!class_name.isEmpty() && !subjecttxt.isEmpty()){
-                SaveToDatabase(class_name,sectiontxt,roomtxt,subjecttxt);
+            if (NetworkUtils.isNetworkConnected(this)){
+                String class_name = className.getText().toString();
+                String sectiontxt = section.getText().toString();
+                String roomtxt = Room.getText().toString();
+                String subjecttxt = Subject.getText().toString();
+                if (!class_name.isEmpty() && !subjecttxt.isEmpty()){
+                    SaveToDatabase(class_name,sectiontxt,roomtxt,subjecttxt);
+                }
+            }else {
+                Snackbar.make(view, "Internet connection failed", Snackbar.LENGTH_LONG).show();
             }
+
         });
     }
 
@@ -66,35 +79,46 @@ public class CreateAClassActivity extends AppCompatActivity {
         String class_code = autoCode();
         Classes aClass = new Classes(userID,class_name,class_code,sectiontxt,roomtxt,subjecttxt);
         classRef.push().setValue(aClass);
-
-        saveToUserClass();
+        saveToUserClass(class_code);
     }
 
-    private void saveToUserClass() {
-        Query query = classRef.orderByChild("class_teacher")
-                .equalTo(auth.getCurrentUser().getUid());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void saveToUserClass(String class_code) {
+        Query query = classRef.orderByChild("class_code")
+                .equalTo(class_code);
+        query.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot singleDataSnapshot : snapshot.getChildren()) {
-//                    String userID = auth.getCurrentUser().getUid();
-//                    Classes classes = singleDataSnapshot.getValue(Classes.class);
-//                    User user = new User();
-//                    ArrayList<String> userclass = new ArrayList<>();
-//                    userclass.add(snapshot.getKey());
-//                    Log.d(TAG, "onDataChange: " +snapshot.getChildren());
-////                    Log.d(TAG, "onDataChange: " +userclass);
-////                    user.setUser_classes(userclass);
-////                    userRef.child(userID).setValue(user);
-                }
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                String userID = auth.getCurrentUser().getUid();
+                String classId = snapshot.getKey();
+
+                userRef.child(userID).child("user_classes").child(classId).setValue(classId).addOnSuccessListener(aVoid -> {
+//                    startActivity(new Intent(CreateAClassActivity.this, ClassActivity.class));
+                    finish();
+                });
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(CreateAClassActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     private String autoCode() {
         int length = 8;
         String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
@@ -117,11 +141,5 @@ public class CreateAClassActivity extends AppCompatActivity {
         }
 
         return sb.toString();
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 }
