@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,12 +15,12 @@ import com.example.edu24.R;
 
 public class ClassworkFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private ClassworkViewModel notificationsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
+                ViewModelProviders.of(this).get(ClassworkViewModel.class);
         View root = inflater.inflate(R.layout.fragment_classwork, container, false);
 //        final TextView textView = root.findViewById(R.id.text_notifications);
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {

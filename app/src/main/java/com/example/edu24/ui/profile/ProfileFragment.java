@@ -1,4 +1,4 @@
-package com.example.edu24.ui;
+package com.example.edu24.ui.profile;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +45,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth auth;
     private FirebaseStorage storage;
     private StorageReference storeRef;
+    private ProfileViewModel profileViewModel;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -64,6 +67,11 @@ public class ProfileFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         storeRef = storage.getReference().child(getString(R.string.db_profile));
+
+        //view Model
+        profileViewModel = ViewModelProviders.of(this)
+                .get(ProfileViewModel.class);
+
         return root;
     }
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -27,6 +28,7 @@ import com.example.edu24.model.Classes;
 import com.example.edu24.model.ModelClass;
 import com.example.edu24.R;
 import com.example.edu24.model.User;
+import com.example.edu24.ui.AccountFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -103,21 +105,23 @@ public class ClassesFragment extends Fragment {
             },2000);
         });
         fab.setOnClickListener(views -> {
-            dialogBuilder = new AlertDialog.Builder(getContext(),R.style.Theme_MaterialComponents_Light_Dialog_Alert);
-            View layoutView = getLayoutInflater().inflate(R.layout.user_choice, null);
-            create = layoutView.findViewById(R.id.create_button);
-            join = layoutView.findViewById(R.id.join_button);
-            dialogBuilder.setView(layoutView);
-            AlertDialog alertDialog = dialogBuilder.create();
-            create.setOnClickListener(view1 -> {
-                startActivity(new Intent(getContext(), CreateAClassActivity.class));
-                alertDialog.cancel();
-            });
-            join.setOnClickListener(view12 -> {
-                startActivity(new Intent(getContext(), JoinActivity.class));
-                alertDialog.cancel();
-            });
-            alertDialog.show();
+            NavHostFragment.findNavController(ClassesFragment.this)
+                    .navigate(R.id.action_nav_classes_to_classChoiceFragment);
+//            dialogBuilder = new AlertDialog.Builder(getContext(),R.style.Theme_MaterialComponents_Light_Dialog_Alert);
+//            View layoutView = getLayoutInflater().inflate(R.layout.user_choice, null);
+//            create = layoutView.findViewById(R.id.create_button);
+//            join = layoutView.findViewById(R.id.join_button);
+//            dialogBuilder.setView(layoutView);
+//            AlertDialog alertDialog = dialogBuilder.create();
+//            create.setOnClickListener(view1 -> {
+//                startActivity(new Intent(getContext(), CreateAClassActivity.class));
+//                alertDialog.cancel();
+//            });
+//            join.setOnClickListener(view12 -> {
+//                startActivity(new Intent(getContext(), JoinActivity.class));
+//                alertDialog.cancel();
+//            });
+//            alertDialog.show();
     });
     }
 
@@ -128,8 +132,9 @@ public class ClassesFragment extends Fragment {
                 query.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        Query query = classRef.child(snapshot.getKey())
-                                .orderByKey();
+                        if (snapshot.getKey() != null){
+                            Query query = classRef.child(snapshot.getKey())
+                                    .orderByKey();
                             query.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -150,6 +155,7 @@ public class ClassesFragment extends Fragment {
 
                                 }
                             });
+                        }
                     }
 
                     @Override

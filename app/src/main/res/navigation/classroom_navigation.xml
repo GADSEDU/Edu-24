@@ -9,10 +9,19 @@
         android:id="@+id/nav_classes"
         android:name="com.example.edu24.ui.classes.ClassesFragment"
         android:label="@string/menu_classes"
-        tools:layout="@layout/fragment_classes" />
+        tools:layout="@layout/fragment_classes" >
+        <action
+            android:id="@+id/action_nav_classes_to_classChoiceFragment"
+            app:destination="@id/classChoiceFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.example.edu24.ui.ProfileFragment"
+        android:name="com.example.edu24.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
+    <dialog
+        android:id="@+id/classChoiceFragment"
+        android:name="com.example.edu24.ui.ClassChoiceFragment"
+        android:label="fragment_class_choice"
+        tools:layout="@layout/fragment_class_choice" />
 </navigation>

@@ -21,11 +21,20 @@
 		android:id="@+id/navigation_classwork"
 		android:name="com.example.edu24.ui.classwork.ClassworkFragment"
 		android:label="@string/title_classwork"
-		tools:layout="@layout/fragment_classwork" />
+		tools:layout="@layout/fragment_classwork" >
+		<action
+			android:id="@+id/action_navigation_classwork_to_classworkChoiceFragment"
+			app:destination="@id/classworkChoiceFragment" />
+	</fragment>
 
 	<fragment
 		android:id="@+id/navigation_people"
 		android:name="com.example.edu24.ui.people.PeopleFragment"
 		android:label="@string/title_people"
 		tools:layout="@layout/fragment_people" />
+	<dialog
+		android:id="@+id/classworkChoiceFragment"
+		android:name="com.example.edu24.ui.ClassworkChoiceFragment"
+		android:label="fragment_classwork_choice"
+		tools:layout="@layout/fragment_classwork_choice" />
 </navigation>
