@@ -36,5 +36,14 @@
 		android:id="@+id/classworkChoiceFragment"
 		android:name="com.example.edu24.ui.ClassworkChoiceFragment"
 		android:label="fragment_classwork_choice"
-		tools:layout="@layout/fragment_classwork_choice" />
+		tools:layout="@layout/fragment_classwork_choice" >
+		<action
+			android:id="@+id/action_classworkChoiceFragment_to_resourcesActivity"
+			app:destination="@id/resourcesActivity" />
+	</dialog>
+	<activity
+		android:id="@+id/resourcesActivity"
+		android:name="com.example.edu24.ResourcesActivity"
+		android:label="activity_resources"
+		tools:layout="@layout/activity_resources" />
 </navigation>

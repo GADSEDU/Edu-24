@@ -68,10 +68,6 @@ public class ProfileFragment extends Fragment {
         storage = FirebaseStorage.getInstance();
         storeRef = storage.getReference().child(getString(R.string.db_profile));
 
-        //view Model
-        profileViewModel = ViewModelProviders.of(this)
-                .get(ProfileViewModel.class);
-
         return root;
     }
 
@@ -106,7 +102,7 @@ public class ProfileFragment extends Fragment {
                     first_name.setText(user.getUser_first_name());
                     surname.setText(user.getUser_surname());
                     email.setText(user.getUser_email());
-                    if (!user.getProfile_image().equals(null)){
+                    if (user.getProfile_image() != null){
                         Picasso.get().load(Uri.parse(user.getProfile_image()))
                                 .into(profile_image);
                     }

@@ -106,22 +106,8 @@ public class ClassesFragment extends Fragment {
         });
         fab.setOnClickListener(views -> {
             NavHostFragment.findNavController(ClassesFragment.this)
-                    .navigate(R.id.action_nav_classes_to_classChoiceFragment);
-//            dialogBuilder = new AlertDialog.Builder(getContext(),R.style.Theme_MaterialComponents_Light_Dialog_Alert);
-//            View layoutView = getLayoutInflater().inflate(R.layout.user_choice, null);
-//            create = layoutView.findViewById(R.id.create_button);
-//            join = layoutView.findViewById(R.id.join_button);
-//            dialogBuilder.setView(layoutView);
-//            AlertDialog alertDialog = dialogBuilder.create();
-//            create.setOnClickListener(view1 -> {
-//                startActivity(new Intent(getContext(), CreateAClassActivity.class));
-//                alertDialog.cancel();
-//            });
-//            join.setOnClickListener(view12 -> {
-//                startActivity(new Intent(getContext(), JoinActivity.class));
-//                alertDialog.cancel();
-//            });
-//            alertDialog.show();
+                    .navigate(R.id.action_navigation_classwork_to_classworkChoiceFragment);
+
     });
     }
 

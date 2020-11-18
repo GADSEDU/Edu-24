@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/attachment"
+        android:title="attachment"
+        android:orderInCategory="101"
+        android:icon="@drawable/ic_attachment"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/save_draft"
+        android:icon="@drawable/ic_send"
+        android:title="send"
+        android:orderInCategory="102"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/schedule"
+        android:title="Schedule"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/delete_draft"
+        android:title="Delete"
+        android:orderInCategory="104"
+        app:showAsAction="never"/>
+</menu>

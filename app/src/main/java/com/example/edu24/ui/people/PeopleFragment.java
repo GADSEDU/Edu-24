@@ -138,7 +138,7 @@ public class PeopleFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 teacherName.setText(user.getUser_first_name() + " "+ user.getUser_surname());
-                if (!user.getProfile_image().equals(null)){
+                if (user.getProfile_image() != null){
                     Picasso.get().load(Uri.parse(user.getProfile_image()))
                             .into(teacherImage);
                 }
